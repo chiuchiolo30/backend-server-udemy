@@ -9,6 +9,13 @@ var bodyParser = require('body-parser');
 var appRoutes = require('./routes/app');
 var usuarioRoutes = require('./routes/usuarios');
 var loginRoutes = require('./routes/login');
+var hospitalRoutes = require('./routes/hospital');
+var medicoRoutes = require('./routes/medico');
+var busquedaRoutes = require('./routes/busqueda');
+var uploadRoutes = require('./routes/upload');
+var imagenesRoutes = require('./routes/imagenes');
+
+
 
 // Inicializar variables
 var app = express();
@@ -26,10 +33,24 @@ mongoose.connection.openUri('mongodb://localhost:27017/hospitalDb', ( err, res )
         console.log('Base de datos: \x1b[32m%s\x1b[0m', 'online');
 });
 
+// Server index config - opcional
+// var serveIndex = require('serve-index');
+// app.use(express.static(__dirname + '/'))
+// app.use('/uploads', serveIndex(__dirname + '/uploads'));
+
+
+
 // Rutas - Middleware
 app.use('/usuario', usuarioRoutes);
+app.use('/hospital', hospitalRoutes);
+app.use('/medico', medicoRoutes);
 app.use('/login', loginRoutes);
-app.use('/', appRoutes);
+app.use('/busqueda', busquedaRoutes);
+app.use('/upload', uploadRoutes);
+app.use('/img', imagenesRoutes);
+
+
+app.use('/', appRoutes); // está tiene que ser la ultima
 
 
 // Escuchar peticiones

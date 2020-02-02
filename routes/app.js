@@ -1,3 +1,5 @@
+/*jshint esversion: 6 */ 
+
 // Principal
 
 var express = require('express');
