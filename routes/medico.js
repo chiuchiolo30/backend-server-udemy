@@ -50,17 +50,14 @@ app.get('/', (req, res, next ) => {
 });
 
 //============================================================================
-// Obtener médico por Id
+// Obtener médico
 //============================================================================
-app.get('/:id', (req, res) => {
-    
-    let id = req.params.id;
-    
-    Medico.findById( id )
-        .populate( 'usuario', 'nombre email img')
-        .populate( 'hospital')
-        .exec( (err, medico) => {
-
+app.get('/:id',(req, res) => {
+    let id   = req.params.id;
+    Medico.findById(id)
+        .populate('usuario', 'nombre, email img')
+        .populate('hospital')
+        .exec( (err, medico) =>{
             if ( err ) {
                 return res.status(500).json({
                         ok: false,
@@ -76,20 +73,19 @@ app.get('/:id', (req, res) => {
                  });
            }
            res.status(200).json({
-                    ok: true,
-                    medico: medico
-                });
+                ok: true,
+                medico: medico
+            });
         });
-});
-
+    });   
 
 //============================================================================
-// Actualizar médico
+// Actualizar usuario
 //============================================================================
 app.put('/:id', mdAutenticacion.verificaToken, (req, res) => {
 
-    let id = req.params.id;
-    let body = req.body;
+    var id = req.params.id;
+    var body = req.body;
 
     Medico.findById( id, (err, medico) => {
 
